@@ -48,5 +48,17 @@ node['ts_phpapp']['apps'].each do |item|
 		docroot "/var/www/#{item['name']}/current/web"
 		cookbook 'apache2'
 	end
+
+	execute "chown-data-www" do
+      command "chown -R www-data:www-data ."
+      cwd "/var/www/#{item['name']}/current/"
+      action :run
+    end
+
+	execute "chmod-data-www" do
+      command "chmod -R 775 ."
+      cwd "/var/www/#{item['name']}/current/"
+      action :run
+    end
 end
 
